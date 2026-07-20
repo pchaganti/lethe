@@ -61,18 +61,3 @@ export async function processPendingQueue(): Promise<boolean> {
     return false;
   }
 }
-
-// Process both pending and failed items (retry failed ones)
-export async function processAllPending(): Promise<void> {
-  await processPendingQueue();
-}
-
-export function startSyncTimer(): void {
-  chrome.alarms.create('syncPending', { periodInMinutes: 5 });
-}
-
-chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === 'syncPending') {
-    processAllPending();
-  }
-});
