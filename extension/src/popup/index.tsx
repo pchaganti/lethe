@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'preact/hooks';
 import { type Bookmark } from '../lib/github';
-import { syncBookmark } from '../lib/sync';
-import { getPendingCount } from '../lib/db';
 import { generateUlid } from '../lib/ulid';
 
 export default function Popup() {
@@ -10,7 +8,6 @@ export default function Popup() {
   const [tags, setTags] = useState('');
   const [note, setNote] = useState('');
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
-  const [pendingCount, setPendingCount] = useState(0);
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
@@ -20,7 +17,6 @@ export default function Popup() {
         setUrl(tabs[0].url || '');
       }
     });
-    getPendingCount().then(setPendingCount);
 
     // Load default tags from config
     chrome.storage.local.get(['defaultTags'], (result) => {
@@ -45,26 +41,26 @@ export default function Popup() {
       coverImage: null,
     };
 
-    const synced = await syncBookmark(bookmark);
-    setStatus(synced ? 'saved' : 'error');
-    if (!synced) {
-      setErrorMsg('Saved locally. Will sync when online.');
-      setPendingCount((c) => c + 1);
+    try {
+      // Import sync dynamically to avoid issues
+      const { syncBookmark } = await import('../lib/sync');
+      const synced = await syncBookmark(bookmark);
+      setStatus(synced ? 'saved' : 'error');
+      if (!synced) {
+        setErrorMsg('Saved locally. Will sync when online.');
+      }
+      // Notify background to attempt sync
+      chrome.runtime.sendMessage({ type: 'SYNC_NOW' });
+    } catch (err) {
+      console.error('Save error:', err);
+      setStatus('error');
+      setErrorMsg('Failed to save. Check console for details.');
     }
-
-    // Notify background to attempt sync
-    chrome.runtime.sendMessage({ type: 'SYNC_NOW' });
   };
 
   return (
-    <div class="w-80 p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <h1 class="text-lg font-bold mb-4">Save to Lethe</h1>
-
-      {pendingCount > 0 && (
-        <div class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-3 py-1.5 rounded mb-3">
-          {pendingCount} bookmark{pendingCount !== 1 ? 's' : ''} pending sync
-        </div>
-      )}
 
       <div class="space-y-3">
         <div>
