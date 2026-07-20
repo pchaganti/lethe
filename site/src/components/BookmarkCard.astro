@@ -9,13 +9,14 @@ interface Props {
 const { bookmark } = Astro.props;
 const domain = getDomain(bookmark.url);
 const initial = bookmark.title.charAt(0).toUpperCase();
+const base = import.meta.env.BASE_URL || '/';
 ---
 <article class="group border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-  <a href={`/reader/${bookmark.id}`} class="block">
+  <a href={base + 'reader/' + bookmark.id} class="block">
     {bookmark.coverImage ? (
       <div class="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800 relative">
         <img
-          src={bookmark.coverImage}
+          src={base + bookmark.coverImage.slice(1)}
           alt={bookmark.title}
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"

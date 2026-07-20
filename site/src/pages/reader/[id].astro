@@ -19,6 +19,7 @@ if (!bookmark) {
 
 const content = getBookmarkContent(id!);
 const domain = getDomain(bookmark.url);
+const base = import.meta.env.BASE_URL || '/';
 ---
 
 <Layout title={bookmark.title + ' \u2014 Lethe'} description={bookmark.note}>
@@ -37,7 +38,7 @@ const domain = getDomain(bookmark.url);
 
       {bookmark.coverImage && (
         <img
-          src={bookmark.coverImage}
+          src={base + bookmark.coverImage.slice(1)}
           alt={bookmark.title}
           class="w-full rounded-xl mb-6 aspect-[16/9] object-cover"
         />
@@ -52,7 +53,7 @@ const domain = getDomain(bookmark.url);
       <div class="flex flex-wrap gap-2 mb-8">
         {bookmark.tags.map((tag) => (
           <a
-            href={'/tags/' + tag}
+            href={base + 'tags/' + tag}
             class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
           >
             {tag}
