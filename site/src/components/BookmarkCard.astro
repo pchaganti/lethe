@@ -1,0 +1,59 @@
+---
+import { getDomain } from '../lib/bookmarks';
+import type { Bookmark } from '../lib/bookmarks';
+
+interface Props {
+  bookmark: Bookmark;
+}
+
+const { bookmark } = Astro.props;
+const domain = getDomain(bookmark.url);
+const initial = bookmark.title.charAt(0).toUpperCase();
+---
+<article class="group border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+  <a href={`/reader/${bookmark.id}`} class="block">
+    {bookmark.coverImage ? (
+      <div class="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800 relative">
+        <img
+          src={bookmark.coverImage}
+          alt={bookmark.title}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 hidden cover-fallback items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+          <span class="text-4xl font-bold text-gray-300 dark:text-gray-700">{initial}</span>
+        </div>
+      </div>
+    ) : (
+      <div class="aspect-[16/9] bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center">
+        <span class="text-4xl font-bold text-gray-300 dark:text-gray-700">{initial}</span>
+      </div>
+    )}
+    <div class="p-4">
+      <h3 class="font-semibold text-sm leading-snug line-clamp-2 mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+        {bookmark.title}
+      </h3>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 truncate">{domain}</p>
+      {bookmark.note && (
+        <p class="text-xs text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">{bookmark.note}</p>
+      )}
+      <div class="flex flex-wrap gap-1">
+        {bookmark.tags.map((tag) => (
+          <span class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-1.5 py-0.5 rounded">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  </a>
+</article>
+
+<script is:inline>
+  document.querySelectorAll('img[alt]').forEach(function(img) {
+    img.onerror = function() {
+      var fallback = this.nextElementSibling;
+      this.style.display = 'none';
+      if (fallback) fallback.classList.remove('hidden');
+    };
+  });
+</script>

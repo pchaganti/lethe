@@ -1,0 +1,98 @@
+{
+  "version": 2,
+  "items": [
+    {
+      "id": "01JHMR6K20AN008ND94KRGARJ3",
+      "url": "https://www.paulgraham.com/greatwork.html",
+      "title": "How to Do Great Work",
+      "tags": [
+        "essays",
+        "life",
+        "work"
+      ],
+      "note": "PG's magnum opus on finding meaningful work",
+      "createdAt": "2025-01-15T10:30:00Z",
+      "contentFetched": true,
+      "coverImage": null
+    },
+    {
+      "id": "01JHQQREM04KP00TH74F0X49W8",
+      "url": "https://martinfowler.com/articles/patterns-of-distributed-systems/",
+      "title": "Patterns of Distributed Systems",
+      "tags": [
+        "engineering",
+        "distributed-systems"
+      ],
+      "note": "Great reference for backend architecture patterns",
+      "createdAt": "2025-01-16T14:20:00Z",
+      "contentFetched": true,
+      "coverImage": "/assets/covers/01JHQQREM04KP00TH74F0X49W8.webp"
+    },
+    {
+      "id": "01JK097KX0PJ1MK8K93KACJH00",
+      "url": "https://simonwillison.net/2023/Nov/26/ai-pair-programming/",
+      "title": "Using LLMs as a pair programming partner",
+      "tags": [
+        "ai",
+        "development"
+      ],
+      "note": "Good overview of AI-assisted coding workflows",
+      "createdAt": "2025-02-01T09:15:00Z",
+      "contentFetched": false,
+      "coverImage": null
+    },
+    {
+      "id": "01JKBA97B0BRKB1QV3CKTPJB53",
+      "url": "https://100r.co/site/home.html",
+      "title": "Hundred Rabbits",
+      "tags": [
+        "creative-coding",
+        "art"
+      ],
+      "note": "Beautiful work on solar-powered computing",
+      "createdAt": "2025-02-05T16:45:00Z",
+      "contentFetched": true,
+      "coverImage": null
+    },
+    {
+      "id": "01JKQTHEM0SEC7JE64WF2NRRM7",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "title": "The Art of Code",
+      "tags": [
+        "programming",
+        "talks"
+      ],
+      "note": "Dylan Beattie's classic talk",
+      "createdAt": "2025-02-10T11:00:00Z",
+      "contentFetched": false,
+      "coverImage": null
+    },
+    {
+      "id": "01JM4MT3T07JCS0YJ7VYKZR2TJ",
+      "url": "https://jvns.ca/blog/2024/04/04/what-we-know-about-the-linux-kernel-scheduler/",
+      "title": "What we know about the Linux kernel scheduler",
+      "tags": [
+        "linux",
+        "kernel",
+        "systems"
+      ],
+      "note": "Clear explainer of a complex topic",
+      "createdAt": "2025-02-15T08:30:00Z",
+      "contentFetched": false,
+      "coverImage": null
+    },
+    {
+      "id": "01JN8DSGR0PK4DC3V8VM3P005J",
+      "url": "https://brandur.org/articles/graceful-degradation",
+      "title": "Graceful Degradation",
+      "tags": [
+        "engineering",
+        "resilience"
+      ],
+      "note": "Build systems that fail softly",
+      "createdAt": "2025-03-01T13:20:00Z",
+      "contentFetched": false,
+      "coverImage": null
+    }
+  ]
+}

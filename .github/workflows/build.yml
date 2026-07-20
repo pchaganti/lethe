@@ -1,0 +1,62 @@
+name: Build and Deploy Lethe
+on:
+  push:
+    paths:
+      - 'data/bookmarks.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Process new bookmarks (Fetch content & images)
+        run: pnpm run process:bookmarks
+
+      - name: Commit generated content
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ site/public/assets/
+          git commit -m "chore: auto-fetch content and images" || echo "No changes to commit"
+          git push
+
+      - name: Build Astro Site
+        run: pnpm --filter site run build
+
+      - name: Build Pagefind Index
+        run: pnpm --filter site run pagefind
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

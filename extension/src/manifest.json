@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Lethe",
+  "description": "Save bookmarks to your Lethe instance",
+  "version": "1.0.0",
+  "permissions": ["storage", "activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Save to Lethe"
+  },
+  "background": {
+    "service_worker": "src/background.ts"
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "src/icons/icon16.png",
+    "48": "src/icons/icon48.png",
+    "128": "src/icons/icon128.png"
+  }
+}

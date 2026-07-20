@@ -1,0 +1,13 @@
+{
+  "name": "lethe",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter site dev",
+    "build": "pnpm --filter site build",
+    "process:bookmarks": "tsx scripts/process-bookmarks.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

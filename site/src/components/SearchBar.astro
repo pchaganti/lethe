@@ -1,0 +1,103 @@
+---
+---
+<div id="search-modal" class="hidden fixed inset-0 z-[100] bg-black/50 flex items-start justify-center pt-[20vh]">
+  <div class="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-xl mx-4 overflow-hidden">
+    <div class="flex items-center border-b border-gray-200 dark:border-gray-700 px-4">
+      <svg class="w-5 h-5 text-gray-400 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+      </svg>
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Search bookmarks\u2026"
+        class="flex-1 bg-transparent border-none outline-none py-3 px-3 text-sm"
+        autocomplete="off"
+      />
+      <kbd class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500">ESC</kbd>
+    </div>
+    <div id="search-results" class="max-h-80 overflow-y-auto p-2">
+      <p class="text-sm text-gray-400 p-4 text-center">Type to search\u2026</p>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    var modal = document.getElementById("search-modal");
+    var input = document.getElementById("search-input");
+    var resultsContainer = document.getElementById("search-results");
+    var trigger = document.getElementById("search-trigger");
+
+    function openModal() {
+      modal.classList.remove("hidden");
+      input.focus();
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      input.value = "";
+      resultsContainer.innerHTML = '<p class="text-sm text-gray-400 p-4 text-center">Type to search\u2026</p>';
+    }
+
+    trigger.addEventListener("click", openModal);
+
+    document.addEventListener("keydown", function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        openModal();
+      }
+      if (e.key === "Escape") closeModal();
+    });
+
+    modal.addEventListener("click", function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    input.addEventListener("input", async function() {
+      var query = input.value.trim();
+      if (!query) {
+        resultsContainer.innerHTML = '<p class="text-sm text-gray-400 p-4 text-center">Type to search\u2026</p>';
+        return;
+      }
+
+      if (typeof pagefind === "undefined") {
+        resultsContainer.innerHTML = '<p class="text-sm text-gray-400 p-4 text-center">Search index not loaded. Run Pagefind after build.</p>';
+        return;
+      }
+
+      var search = await pagefind.search(query);
+      var results = [];
+      for (var i = 0; i < Math.min(search.results.length, 10); i++) {
+        var data = await search.results[i].data();
+        results.push(data);
+      }
+
+      if (results.length === 0) {
+        resultsContainer.innerHTML = '<p class="text-sm text-gray-400 p-4 text-center">No results found</p>';
+        return;
+      }
+
+      // Clear results
+      resultsContainer.innerHTML = "";
+
+      // Build results safely using DOM API
+      results.forEach(function(r) {
+        var a = document.createElement("a");
+        a.href = r.url;
+        a.className = "block p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors";
+
+        var titleP = document.createElement("p");
+        titleP.className = "text-sm font-medium";
+        titleP.textContent = (r.meta && r.meta.title) ? r.meta.title : r.url;
+
+        var excerptP = document.createElement("p");
+        excerptP.className = "text-xs text-gray-500 mt-1 line-clamp-2";
+        excerptP.textContent = r.excerpt || "";
+
+        a.appendChild(titleP);
+        a.appendChild(excerptP);
+        resultsContainer.appendChild(a);
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import BookmarkCard from '../components/BookmarkCard.astro';
+import SearchBar from '../components/SearchBar.astro';
+import { getBookmarks } from '../lib/bookmarks';
+
+const data = getBookmarks();
+const sorted = [...data.items].sort(
+  (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+);
+---
+
+<Layout title="Lethe">
+  <Header />
+  <SearchBar />
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="mb-6">
+      <p class="text-sm text-gray-500 dark:text-gray-400">{sorted.length} bookmarks</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sorted.map((bookmark) => (
+        <BookmarkCard bookmark={bookmark} />
+      ))}
+    </div>
+  </main>
+</Layout>

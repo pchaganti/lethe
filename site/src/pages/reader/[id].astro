@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import { getBookmarks, getBookmarkById, getBookmarkContent, getDomain } from '../../lib/bookmarks';
+
+export function getStaticPaths() {
+  const data = getBookmarks();
+  return data.items.map((item) => ({
+    params: { id: item.id },
+  }));
+}
+
+const { id } = Astro.params;
+const bookmark = getBookmarkById(id!)!;
+
+if (!bookmark) {
+  return Astro.redirect('/');
+}
+
+const content = getBookmarkContent(id!);
+const domain = getDomain(bookmark.url);
+---
+
+<Layout title={bookmark.title + ' \u2014 Lethe'} description={bookmark.note}>
+  <Header />
+  <main class="max-w-3xl mx-auto px-4 py-8">
+    <article>
+      <a
+        href={bookmark.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-xs text-blue-600 dark:text-blue-400 hover:underline mb-2 inline-block"
+      >
+        {domain} \u2197
+      </a>
+      <h1 class="text-3xl font-bold mb-4 leading-tight">{bookmark.title}</h1>
+
+      {bookmark.coverImage && (
+        <img
+          src={bookmark.coverImage}
+          alt={bookmark.title}
+          class="w-full rounded-xl mb-6 aspect-[16/9] object-cover"
+        />
+      )}
+
+      {bookmark.note && (
+        <div class="bg-gray-50 dark:bg-gray-900 border-l-4 border-blue-500 p-4 rounded-r-lg mb-6">
+          <p class="text-sm text-gray-700 dark:text-gray-300 italic">{bookmark.note}</p>
+        </div>
+      )}
+
+      <div class="flex flex-wrap gap-2 mb-8">
+        {bookmark.tags.map((tag) => (
+          <a
+            href={'/tags/' + tag}
+            class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+
+      {content ? (
+        <div class="prose prose-gray dark:prose-invert max-w-none" set:html={content} />
+      ) : (
+        <div class="text-center py-12 text-gray-400">
+          <p>Content not yet extracted.</p>
+          <p class="text-sm mt-2">The CI pipeline will process this bookmark on the next run.</p>
+        </div>
+      )}
+
+      <div class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
+        <a href={bookmark.url} class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+          Read original \u2192
+        </a>
+      </div>
+    </article>
+  </main>
+</Layout>

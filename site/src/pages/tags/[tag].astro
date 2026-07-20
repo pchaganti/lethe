@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import BookmarkCard from '../../components/BookmarkCard.astro';
+import { getAllTags, getBookmarksByTag } from '../../lib/bookmarks';
+
+export function getStaticPaths() {
+  const tags = getAllTags();
+  return tags.map((tag) => ({
+    params: { tag },
+  }));
+}
+
+const { tag } = Astro.params;
+const bookmarks = getBookmarksByTag(tag!);
+---
+
+<Layout title={tag + ' \u2014 Lethe'} description={'Bookmarks tagged \"' + tag + '\"'}>
+  <Header />
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-2">Tag: {tag}</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">{bookmarks.length} bookmark{bookmarks.length !== 1 ? 's' : ''}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {bookmarks.map((bookmark) => (
+        <BookmarkCard bookmark={bookmark} />
+      ))}
+    </div>
+  </main>
+</Layout>

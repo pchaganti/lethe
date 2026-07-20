@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import BookmarkCard from '../../components/BookmarkCard.astro';
+import { getAllDomains, getBookmarksByDomain } from '../../lib/bookmarks';
+
+export function getStaticPaths() {
+  const domains = getAllDomains();
+  return domains.map((domain) => ({
+    params: { domain },
+  }));
+}
+
+const { domain } = Astro.params;
+const bookmarks = getBookmarksByDomain(domain!);
+---
+
+<Layout title={domain + ' \u2014 Lethe'} description={'Bookmarks from ' + domain}>
+  <Header />
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-2">{domain}</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">{bookmarks.length} bookmark{bookmarks.length !== 1 ? 's' : ''}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {bookmarks.map((bookmark) => (
+        <BookmarkCard bookmark={bookmark} />
+      ))}
+    </div>
+  </main>
+</Layout>
