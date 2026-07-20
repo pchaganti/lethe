@@ -5,12 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lethe</title>
     <style>
-      * { box-sizing: border-box; }
-      body { width: 320px; margin: 0; padding: 0; font-family: system-ui, sans-serif; background: white; color: #111; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { width: 320px; font-family: system-ui, -apple-system, sans-serif; padding: 16px; }
+      @media (prefers-color-scheme: dark) {
+        body { background: #111827; color: #f3f4f6; }
+        input, textarea { background: #1f2937; color: #f3f4f6; border-color: #4b5563; }
+        button { background: #2563eb; }
+        button:disabled { background: #4b5563; }
+        a { color: #60a5fa; }
+      }
+      h1 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+      .field { margin-bottom: 12px; }
+      label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+      input, textarea {
+        width: 100%; padding: 6px 8px; font-size: 13px;
+        border: 1px solid #d1d5db; border-radius: 6px; background: #f9fafb;
+      }
+      textarea { resize: none; }
+      button {
+        width: 100%; padding: 8px; font-size: 13px; font-weight: 600;
+        background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;
+      }
+      button:disabled { background: #9ca3af; cursor: default; }
+      .error { font-size: 12px; color: #d97706; margin-top: 8px; }
+      .settings-link { display: block; text-align: center; font-size: 12px; color: #6b7280; margin-top: 12px; text-decoration: none; }
     </style>
   </head>
   <body>
-    <div id="app">Loading...</div>
+    <div id="app"></div>
     <script type="module" src="./src/popup/main.tsx"></script>
   </body>
 </html>
