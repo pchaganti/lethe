@@ -36,6 +36,18 @@
       "createdAt": "2026-07-22T23:37:30.549Z",
       "contentFetched": false,
       "coverImage": null
+    },
+    {
+      "id": "01KY638YSDV3KCVG26E17NZB9S",
+      "url": "https://monthlyreview.org/articles/the-thermodynamics-of-capital/",
+      "title": "The Thermodynamics of Capital",
+      "tags": [
+        "neurons"
+      ],
+      "note": "",
+      "createdAt": "2026-07-22T23:41:17.485Z",
+      "contentFetched": false,
+      "coverImage": null
     }
   ]
 }
