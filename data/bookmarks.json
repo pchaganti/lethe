@@ -48,6 +48,18 @@
       "createdAt": "2026-07-22T23:41:17.485Z",
       "contentFetched": true,
       "coverImage": "/assets/covers/01KY638YSDV3KCVG26E17NZB9S.webp"
+    },
+    {
+      "id": "01KY63HZEG6JZQ1R8DW7FBK0ZR",
+      "url": "https://hedgehammer.substack.com/p/the-red-queens-race-why-no-ai-lab",
+      "title": "The Red Queen’s Race",
+      "tags": [
+        "neurons"
+      ],
+      "note": "",
+      "createdAt": "2026-07-22T23:46:13.072Z",
+      "contentFetched": false,
+      "coverImage": null
     }
   ]
 }
