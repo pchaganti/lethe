@@ -5,11 +5,25 @@
       "id": "01KXZP68J3455Q7GKDJ8W1GY34",
       "url": "https://newleftreview.org/sidecar/posts/awaiting-the-crash",
       "title": "Awaiting the Crash?",
-      "tags": ["finance"],
+      "tags": [
+        "finance"
+      ],
       "note": "",
       "createdAt": "2026-07-20T11:57:11.107Z",
       "contentFetched": true,
       "coverImage": "/assets/covers/01KXZP68J3455Q7GKDJ8W1GY34.webp"
+    },
+    {
+      "id": "01KY55PRCSV981R0FGTTEGB525",
+      "url": "https://sheets.works/data-viz/how-to-read-a-painting/",
+      "title": "How to read a painting",
+      "tags": [
+        "art"
+      ],
+      "note": "",
+      "createdAt": "2026-07-22T15:04:32.410Z",
+      "contentFetched": false,
+      "coverImage": null
     }
   ]
 }
