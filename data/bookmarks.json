@@ -24,6 +24,18 @@
       "createdAt": "2026-07-22T15:04:32.410Z",
       "contentFetched": true,
       "coverImage": "/assets/covers/01KY55PRCSV981R0FGTTEGB525.webp"
+    },
+    {
+      "id": "01KY63215NVNPWA5VABTX708XX",
+      "url": "https://adamtooze.substack.com/p/chartbook-457-the-metamorphoses-of",
+      "title": "The metamorphoses of the dollar",
+      "tags": [
+        "finance"
+      ],
+      "note": "",
+      "createdAt": "2026-07-22T23:37:30.549Z",
+      "contentFetched": false,
+      "coverImage": null
     }
   ]
 }
