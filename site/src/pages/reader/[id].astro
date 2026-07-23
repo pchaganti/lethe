@@ -5,9 +5,11 @@ import { getBookmarks, getBookmarkById, getBookmarkContent, getDomain } from '..
 
 export function getStaticPaths() {
   const data = getBookmarks();
-  return data.items.map((item) => ({
-    params: { id: item.id },
-  }));
+  return data.items
+    .filter((item) => item.contentFetched)
+    .map((item) => ({
+      params: { id: item.id },
+    }));
 }
 
 const { id } = Astro.params;

@@ -10,9 +10,10 @@ const { bookmark } = Astro.props;
 const domain = getDomain(bookmark.url);
 const initial = bookmark.title.charAt(0).toUpperCase();
 const base = import.meta.env.BASE_URL || '/';
+const cardHref = bookmark.contentFetched ? base + "reader/" + bookmark.id : bookmark.url;
 ---
 <article class="group border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-  <a href={base + "reader/" + bookmark.id} class="block" target="_blank" rel="noopener noreferrer">
+  <a href={cardHref} class="block" target="_blank" rel="noopener noreferrer">
     {bookmark.coverImage ? (
       <div class="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800 relative">
         <img
