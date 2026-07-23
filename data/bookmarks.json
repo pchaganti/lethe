@@ -60,6 +60,18 @@
       "createdAt": "2026-07-22T23:46:13.072Z",
       "contentFetched": false,
       "coverImage": null
+    },
+    {
+      "id": "01KY8H425J0XMMSJJHH5NNT0GS",
+      "url": "https://minimal-agent.com/",
+      "title": "Minimal Agent",
+      "tags": [
+        "neurons"
+      ],
+      "note": "",
+      "createdAt": "2026-07-23T22:21:46.034Z",
+      "contentFetched": false,
+      "coverImage": null
     }
   ]
 }
